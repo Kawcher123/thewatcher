@@ -11,9 +11,11 @@ export class AuthService {
     {
         const user= await this.userService.findByEmail(email);
         
-       const isMatch = await bcrypt.compare(password, user.password);
+     if(user)
+     {
+          const isMatch = await bcrypt.compare(password, user.password);
 
-        if(user && isMatch )
+        if(isMatch )
         {
             delete user.password;
             return user;
@@ -23,12 +25,17 @@ export class AuthService {
             return null;
         }
     }
+    else
+    {
+        return null;
+    }
+    }
 
 
     async login(user: any) {
         const payload = {id: user.id,name:user.name,phone:user.phone, email: user.email};
-        return {
-          access_token: this.jwtService.sign(payload),
-        };
+        return {"statusCode":200,access_token: this.jwtService.sign(payload),
+        }
+          ;
       }
 }

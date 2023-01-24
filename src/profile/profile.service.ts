@@ -10,8 +10,14 @@ export class ProfileService {
     async getProfileData(email:string): Promise<any>
     {
         const user= await this.userService.findByEmail(email);
-        delete user.password;
-        return user;
+     if(user)
+      {  delete user.password;
+        return {"error":false,"message":"User data retrieved Successfully","data":user};
+    }
+    else
+    {
+        return {"error":true,"message":"Failed to retrieved user data"};
+    }
     }
 
 }

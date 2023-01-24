@@ -3,7 +3,7 @@ import { ExpenseCategoryService } from './expense_category.service';
 import { CreateExpenseCategoryDto } from './dto/create-expense_category.dto';
 import { UpdateExpenseCategoryDto } from './dto/update-expense_category.dto';
 
-@Controller('expense-category')
+@Controller('user/expense-category')
 export class ExpenseCategoryController {
   constructor(private readonly expenseCategoryService: ExpenseCategoryService) {}
 
@@ -12,7 +12,7 @@ export class ExpenseCategoryController {
     return this.expenseCategoryService.create(createExpenseCategoryDto);
   }
 
-  @Get()
+  @Get('/expenseCategoryList')
   findAll() {
     return this.expenseCategoryService.findAll();
   }

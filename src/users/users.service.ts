@@ -12,7 +12,8 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
   
- async create(createUserDto: CreateUserDto) {
+ async create(createUserDto: CreateUserDto) 
+ {
     const user=await this.findByEmail(createUserDto.email);
 
     if(!user)
@@ -21,25 +22,25 @@ export class UsersService {
       createUserDto.password = hash;
       const user= await this.usersRepository.save(createUserDto);
       delete user.password;
-      return user;
+      return {"error":false,"message":"Registration Successful","data":user};
   
     }
     else
     {
-      return {"message":"User already exist"};
+      return {"error":true,"message":"User already exist"};
     }
 
 
   }
 
- async findAll():Promise<User[]> {
+ async findAll():Promise<any> {
     const user=await this.usersRepository.find();
 
     user.forEach(function (value) {
       delete value.password;
     }); 
    
-    return user;
+    return {"error":false,"data":user};
   }
 
   findOne(id: number) {
