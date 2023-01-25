@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreatePaymentMethodDto } from './dto/create-payment_method.dto';
 import { UpdatePaymentMethodDto } from './dto/update-payment_method.dto';
@@ -34,7 +33,8 @@ export class PaymentMethodsService {
     }
   }
 
-  findOne(id: number) {
+  findOne(id: number)
+   {
     return this.paymentMethodRepository.findOne({where:{id}});
   
   }

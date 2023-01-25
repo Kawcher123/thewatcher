@@ -32,6 +32,10 @@ export class ExpensesService {
     return {"data":expense};
   }
 
+
+
+  
+
   async findAll(userId:number) {
 
     const expenses=await this.expenseRepository.find({where:{userId}});
