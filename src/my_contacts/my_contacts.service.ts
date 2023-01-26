@@ -1,15 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateMyContactDto } from './dto/create-my_contact.dto';
 import { UpdateMyContactDto } from './dto/update-my_contact.dto';
+import { MyContact } from './entities/my_contact.entity';
 
 @Injectable()
 export class MyContactsService {
-  create(createMyContactDto: CreateMyContactDto) {
-    return 'This action adds a new myContact';
+
+  constructor(
+    @InjectRepository(MyContact)
+    private myContactRepository: Repository<MyContact>,
+  ) {}
+
+
+  async create(createMyContactDto: CreateMyContactDto,userId:number) {
+
+    createMyContactDto.userId=userId;
+
+    const my_contact=await this.myContactRepository.save(createMyContactDto);
+
+    return {"error":false,"message":"Data added successfully","data":my_contact};
   }
 
-  findAll() {
-    return `This action returns all myContacts`;
+  async findAll(userId:number) {
+
+    const my_contacts=await this.myContactRepository.find({where:{userId}});
+
+    if(my_contacts)
+    {
+      return {"error":false,"message":"Data added successfully","data":my_contacts};
+    }
+    else{
+      return {"error":true,"message":"No Data Found","data":my_contacts};
+    }
   }
 
   findOne(id: number) {

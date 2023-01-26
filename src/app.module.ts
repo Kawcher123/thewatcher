@@ -21,6 +21,8 @@ import { ExpenseCategory } from './expense_category/entities/expense_category.en
 import { Expense } from './expenses/entities/expense.entity';
 import { BeneficiaryContact } from './beneficiary_contacts/entities/beneficiary_contact.entity';
 import { PaymentMethod } from './payment_methods/entities/payment_method.entity';
+import { MyContact } from './my_contacts/entities/my_contact.entity';
+import { MyLoan } from './my_loans/entities/my_loan.entity';
 
 @Module({
   imports: [
@@ -31,7 +33,7 @@ import { PaymentMethod } from './payment_methods/entities/payment_method.entity'
       username: 'root',
       password: '',
       database: 'thewatcher',
-      entities: [Role,Service,Permission,User,ExpenseCategory,Expense,BeneficiaryContact,PaymentMethod],
+      entities: [Role,Service,Permission,User,ExpenseCategory,Expense,BeneficiaryContact,PaymentMethod,MyContact,MyLoan],
       synchronize: true,
     }),
     ServicesModule,

@@ -1,22 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body,Request, Patch, Param, Delete } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common/decorators';
+import { AuthGuard } from '@nestjs/passport';
 import { BeneficiaryContactsService } from './beneficiary_contacts.service';
 import { CreateBeneficiaryContactDto } from './dto/create-beneficiary_contact.dto';
 import { UpdateBeneficiaryContactDto } from './dto/update-beneficiary_contact.dto';
 
-@Controller('beneficiary-contacts')
+@Controller('user/beneficiary-contacts')
 export class BeneficiaryContactsController {
   constructor(private readonly beneficiaryContactsService: BeneficiaryContactsService) {}
 
-  @Post()
-  create(@Body() createBeneficiaryContactDto: CreateBeneficiaryContactDto) {
-    return this.beneficiaryContactsService.create(createBeneficiaryContactDto);
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/addBeneficiaryContact')
+  create(@Body() createBeneficiaryContactDto: CreateBeneficiaryContactDto,@Request() req:any) {
+    return this.beneficiaryContactsService.create(createBeneficiaryContactDto,req.user.id);
   }
+  
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   findAll() {
     return this.beneficiaryContactsService.findAll();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.beneficiaryContactsService.findOne(+id);
