@@ -27,13 +27,7 @@ export class MyContactsService {
 
     const my_contacts=await this.myContactRepository.find({where:{userId}});
 
-    if(my_contacts)
-    {
-      return {"error":false,"message":"Data added successfully","data":my_contacts};
-    }
-    else{
-      return {"error":true,"message":"No Data Found","data":my_contacts};
-    }
+    return {"error":false,"message":"Data retrieved successfully","data":my_contacts};
   }
 
   findOne(id: number) {

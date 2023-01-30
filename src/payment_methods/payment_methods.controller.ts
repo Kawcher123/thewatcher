@@ -3,6 +3,7 @@ import { PaymentMethodsService } from './payment_methods.service';
 import { CreatePaymentMethodDto } from './dto/create-payment_method.dto';
 import { UpdatePaymentMethodDto } from './dto/update-payment_method.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Put } from '@nestjs/common/decorators';
 
 @Controller('user/payment-methods')
 export class PaymentMethodsController {
@@ -27,13 +28,13 @@ export class PaymentMethodsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Patch('/editpaymentMethod:id')
-  update(@Param('id') id: string, @Body() updatePaymentMethodDto: UpdatePaymentMethodDto) {
-    return this.paymentMethodsService.update(+id, updatePaymentMethodDto);
+  @Patch('/editpaymentMethod')
+  update( @Body() updatePaymentMethodDto: UpdatePaymentMethodDto,@Request() req:any) {
+    return this.paymentMethodsService.update(+updatePaymentMethodDto.id, updatePaymentMethodDto);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('/deletepaymentMethod:id')
+  @Delete('/deletepaymentMethod/:id')
   remove(@Param('id') id: string) {
     return this.paymentMethodsService.remove(+id);
   }

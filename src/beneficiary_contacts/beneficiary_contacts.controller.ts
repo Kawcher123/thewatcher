@@ -17,9 +17,9 @@ export class BeneficiaryContactsController {
   
 
   @UseGuards(AuthGuard('jwt'))
-  @Get()
-  findAll() {
-    return this.beneficiaryContactsService.findAll();
+  @Get('/getBeneficiaryContacts')
+  findAll(@Request() req:any) {
+    return this.beneficiaryContactsService.findAll(req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

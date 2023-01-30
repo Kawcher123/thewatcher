@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body,Request, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body,Request, Patch, Param, Delete, UseGuards,Query } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
@@ -17,9 +17,18 @@ export class ExpensesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/expenseList')
-  findAll(@Request() req:any) {
-    return this.expensesService.findAll(req.user.id);
+  findAll(@Query() { limit, page },@Request() req:any) {
+    return this.expensesService.findAll(limit,page,req.user.id);
   }
+
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/weeklyExpenseList')
+  getWeekly(@Query() { start, end },@Request() req:any) {
+    return this.expensesService.weekLyReport(req.user.id,start,end);
+  }
+
+
 
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')

@@ -25,8 +25,17 @@ else{
 }
   }
 
-  findAll() {
-    return `This action returns all beneficiaryContacts`;
+  async findAll(userId:number) {
+    const beneficiary_contacts=await this.beneficiaryContactRepo.find({where :{userId}});
+if(beneficiary_contacts)
+{
+  return {"error":false,"message":"Data retrieved successfully","data":beneficiary_contacts};
+}
+else
+{
+  return {"error":true,"message":"Failed to get data","data":beneficiary_contacts};
+}
+   
   }
 
   findOne(id: number) {

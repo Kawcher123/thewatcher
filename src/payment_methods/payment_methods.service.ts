@@ -39,9 +39,13 @@ export class PaymentMethodsService {
   
   }
 
-  update(id: number, updatePaymentMethodDto: UpdatePaymentMethodDto) {
+  async update(id: number, updatePaymentMethodDto: UpdatePaymentMethodDto)
+   {
+    const updated=await this.paymentMethodRepository.update(id,updatePaymentMethodDto);
 
-    return this.paymentMethodRepository.update(id,updatePaymentMethodDto);
+    const updatedData=await this.paymentMethodRepository.findOne({where:{id}});
+
+    return {"error":false,"message":"Data updated successfully","data":updatedData};
   }
 
   remove(id: number) {
