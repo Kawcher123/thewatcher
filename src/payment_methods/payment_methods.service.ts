@@ -41,6 +41,7 @@ export class PaymentMethodsService {
 
   async update(id: number, updatePaymentMethodDto: UpdatePaymentMethodDto)
    {
+    updatePaymentMethodDto.current_balance=updatePaymentMethodDto.balance;
     const updated=await this.paymentMethodRepository.update(id,updatePaymentMethodDto);
 
     const updatedData=await this.paymentMethodRepository.findOne({where:{id}});
@@ -48,7 +49,8 @@ export class PaymentMethodsService {
     return {"error":false,"message":"Data updated successfully","data":updatedData};
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} paymentMethod`;
+  async remove(id: number) {
+    const deleted=await this.paymentMethodRepository.delete(id);
+    return {"error":false,"message":"Data delted successfully"};
   }
 }

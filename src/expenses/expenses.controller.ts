@@ -24,7 +24,7 @@ export class ExpensesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/weeklyExpenseList')
-  getWeekly(@Query() { start, end },@Request() req:any) {
+  getWeekly(@Body() { start, end },@Request() req:any) {
     return this.expensesService.weekLyReport(req.user.id,start,end);
   }
 

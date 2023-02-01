@@ -39,11 +39,17 @@ export class Expense {
     @Column({type:'int',default:1})
     isActive: number;
 
-    @CreateDateColumn()
-    created_at: Date; // Creation date
+    @Column({type: 
+        'timestamp', 
+        nullable: false,default: ()=> 
+        'NOW()' })
+        
+    created_at: string; // Creation date
 
-    @UpdateDateColumn()
-    updated_at: Date; // Last updated date
+    @Column({type: 
+        'timestamp', 
+        nullable: true })
+    updated_at: string; // Last updated date
 
     @DeleteDateColumn()
     deleted_at: Date; // Deletion date

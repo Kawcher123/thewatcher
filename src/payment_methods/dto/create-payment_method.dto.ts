@@ -8,7 +8,6 @@ export class CreatePaymentMethodDto {
     @IsNotEmpty()
     balance: number;
 
-    @IsNotEmpty()
     current_balance: number;
 
     userId: number;

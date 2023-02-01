@@ -24,7 +24,7 @@ export class ExpenseCategoryService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} expenseCategory`;
+    return this.expenseRepository.findOne({where:{id}});
   }
 
   update(id: number, updateExpenseCategoryDto: UpdateExpenseCategoryDto) {

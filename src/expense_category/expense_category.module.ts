@@ -6,6 +6,7 @@ import { ExpenseCategory } from './entities/expense_category.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ExpenseCategory])],
+  exports:[ExpenseCategoryService],
   controllers: [ExpenseCategoryController],
   providers: [ExpenseCategoryService]
 })
