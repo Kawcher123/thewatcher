@@ -35,7 +35,7 @@ export class MyLoansService {
 
     }
 
-    this.paymentMethodService.update(payment_method.id,payment_method);
+    this.paymentMethodService.updateData(payment_method.id,payment_method);
 
     const my_loan=await this.myLoanRepo.save(createMyLoanDto);
 
