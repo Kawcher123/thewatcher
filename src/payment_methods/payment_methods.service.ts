@@ -49,6 +49,15 @@ export class PaymentMethodsService {
     return {"error":false,"message":"Data updated successfully","data":updatedData};
   }
 
+
+
+  async updateData(id: number, updatePaymentMethodDto: UpdatePaymentMethodDto)
+  {
+
+   const updated=await this.paymentMethodRepository.update(id,updatePaymentMethodDto);
+
+ }
+
   async remove(id: number) {
     const deleted=await this.paymentMethodRepository.delete(id);
     return {"error":false,"message":"Data delted successfully"};

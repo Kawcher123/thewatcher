@@ -7,7 +7,7 @@ import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { Expense } from './entities/expense.entity';
 import { format } from 'date-fns';
 import { ExpenseCategoryService } from 'src/expense_category/expense_category.service';
-import { ExpenseCategory } from 'src/expense_category/entities/expense_category.entity';
+
 @Injectable()
 export class ExpensesService {
   constructor(
@@ -22,13 +22,15 @@ export class ExpensesService {
   async create(createExpenseDto: CreateExpenseDto, userId: number) {
 
     createExpenseDto.userId = userId;
-
+   
     const payment_methods = await this.paymentMethodService.findOne(createExpenseDto.paymentMethodId);
 
     payment_methods.current_balance = payment_methods.current_balance - createExpenseDto.amount;
 
-    await this.paymentMethodService.update(payment_methods.id, payment_methods);
 
+    const newPayment=await this.paymentMethodService.updateData(payment_methods.id, payment_methods);
+
+   
 
     const expense = await this.expenseRepository.save(createExpenseDto);
 
@@ -74,6 +76,7 @@ export class ExpensesService {
     var categoryWiseExpense: any = [];
 
     var maxAmount: number = 0;
+  
 
     var results: any = [];
     var perDay:any;
@@ -87,7 +90,7 @@ export class ExpensesService {
 
     let expenses = await this.expenseRepository.find(
       {
-   
+        relations: { expenseCategory: true },
         where:
         {
           userId: userId,
@@ -97,7 +100,7 @@ export class ExpensesService {
           id: "DESC"
 
         },
-        relations: { expenseCategory: true },
+     
       });
 
     // const expenses = await this.expenseRepository.createQueryBuilder('expense')
@@ -147,11 +150,11 @@ export class ExpensesService {
       }
 
       var newCategoryWiseData:any=[];
-
+    
       console.log(categoryWiseExpense.length);
 
       for(let k=0;k<categoryWiseExpense.length;k++)
-      {
+      {  var perDaymaxAmount: number = 0;
 
         for(let l=k;l<categoryWiseExpense.length;l++)
         {
@@ -159,10 +162,15 @@ export class ExpensesService {
 
             perDay=categoryWiseExpense[l].created_at;
             perDayExpense.push(categoryWiseExpense[l]);
-
+            if(categoryWiseExpense[k].amount>perDaymaxAmount)
+            {
+              perDaymaxAmount=categoryWiseExpense[k].amount;
+            }
         
           }  
         }
+
+     
         if(dates.includes(perDay)==false) {
           
           newCategoryWiseData.push(
@@ -176,9 +184,6 @@ export class ExpensesService {
         perDayExpense=[];
         dates.push(perDay);
       }
-
-      console.log('/////\n');
-      console.log(newCategoryWiseData);
 
 
       
@@ -230,12 +235,6 @@ export class ExpensesService {
     //   data = {};
 
     // }
-
-
-
-
-
-
 
     if (expenses) {
       return { "error": false, "message": "Data retrieved successfully", "maxAmount": maxAmount, "data": results };
