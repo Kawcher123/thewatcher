@@ -23,7 +23,7 @@ export class ExpensesService {
 
     createExpenseDto.userId = userId;
    
-    const payment_methods = await this.paymentMethodService.findOne(createExpenseDto.paymentMethodId);
+    const payment_methods = await this.paymentMethodService.findOne(createExpenseDto.paymentMethodId,userId);
 
     payment_methods.current_balance = payment_methods.current_balance - createExpenseDto.amount;
 
@@ -34,7 +34,14 @@ export class ExpensesService {
 
     const expense = await this.expenseRepository.save(createExpenseDto);
 
-    return { "data": expense };
+    if(expense)
+    {
+      return {"error":false,"message":"Data saved successfully", "data": expense };
+    }
+    else
+    {
+      return {"error":true,"message":"Failed to save data", "data": expense };
+    }
   }
 
 

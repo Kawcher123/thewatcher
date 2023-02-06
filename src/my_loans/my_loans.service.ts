@@ -17,7 +17,7 @@ export class MyLoansService {
 
   async create(createMyLoanDto: CreateMyLoanDto) {
 
-    const payment_method=await this.paymentMethodService.findOne(createMyLoanDto.paymentMethodId);
+    const payment_method=await this.paymentMethodService.findOne(createMyLoanDto.paymentMethodId,createMyLoanDto.userId);
 
     if(payment_method)
     {

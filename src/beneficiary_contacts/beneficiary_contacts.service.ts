@@ -19,13 +19,18 @@ export class BeneficiaryContactsService {
   if(beneficiary_contact){
     return {"error":false,"message":"Data saved successfully","data":beneficiary_contact};
 }
-else{
+else
+{
  
   return {"error":true,"message":"Failed to save","data":beneficiary_contact};
 }
+
+
   }
 
-  async findAll(userId:number) {
+
+
+async findAll(userId:number) {
     const beneficiary_contacts=await this.beneficiaryContactRepo.find({where :{userId}});
 if(beneficiary_contacts)
 {
@@ -37,6 +42,9 @@ else
 }
    
   }
+
+
+
 
   findOne(id: number) {
     return `This action returns a #${id} beneficiaryContact`;

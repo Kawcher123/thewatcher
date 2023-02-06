@@ -26,9 +26,12 @@ export class MyContactsController {
     return this.myContactsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMyContactDto: UpdateMyContactDto) {
-    return this.myContactsService.update(+id, updateMyContactDto);
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/myContacts/update')
+  update( @Body() updateMyContactDto: UpdateMyContactDto,@Request() req:any) {
+    updateMyContactDto.userId=req.user.id;
+    
+    return this.myContactsService.update(updateMyContactDto);
   }
 
   @Delete(':id')

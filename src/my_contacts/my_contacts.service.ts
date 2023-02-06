@@ -34,8 +34,29 @@ export class MyContactsService {
     return `This action returns a #${id} myContact`;
   }
 
-  update(id: number, updateMyContactDto: UpdateMyContactDto) {
-    return `This action updates a #${id} myContact`;
+  async update( updateMyContactDto: UpdateMyContactDto) {
+    
+    console.log(updateMyContactDto);
+  
+    const updated=await this.myContactRepository
+    .createQueryBuilder()
+    .update(updateMyContactDto)
+    .set(updateMyContactDto)
+    .where("id = :id", { id: updateMyContactDto.id })
+    .andWhere("userId = :userId", { userId: updateMyContactDto.userId })
+    .execute()
+
+    console.log(updated);
+
+    const updatedData=await this.myContactRepository.findOne({where:{id:updateMyContactDto.id,userId:updateMyContactDto.userId}});
+
+   if(updatedData){
+     return {"error":false,"message":"Data updated successfully","data":updatedData};
+    }
+    else
+    {
+      return {"error":true,"message":"Failed to update data","data":{}};
+    }
   }
 
   remove(id: number) {

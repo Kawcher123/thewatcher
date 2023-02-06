@@ -23,19 +23,20 @@ export class PaymentMethodsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/paymentMethod:id')
-  findOne(@Param('id') id: string) {
-    return this.paymentMethodsService.findOne(+id);
+  findOne(@Param('id') id: string,@Request() req:any) {
+    return this.paymentMethodsService.findOne(+id,req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('/editpaymentMethod')
   update( @Body() updatePaymentMethodDto: UpdatePaymentMethodDto,@Request() req:any) {
+    updatePaymentMethodDto.userId=req.user.id;
     return this.paymentMethodsService.update(+updatePaymentMethodDto.id, updatePaymentMethodDto);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/deletepaymentMethod/:id')
-  remove(@Param('id') id: string) {
-    return this.paymentMethodsService.remove(+id);
+  remove(@Param('id') id: number,@Request() req:any) {
+    return this.paymentMethodsService.remove(+id,req.user.id);
   }
 }
