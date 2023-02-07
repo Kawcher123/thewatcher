@@ -17,7 +17,7 @@ export class CreateExpenseDto {
     @IsNotEmpty()
     paymentMethodId:number;
 
-    
+    @IsNotEmpty()
     created_at:string
 
 

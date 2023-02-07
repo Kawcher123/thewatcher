@@ -22,8 +22,11 @@ export class ExpensesService {
   async create(createExpenseDto: CreateExpenseDto, userId: number) {
 
     createExpenseDto.userId = userId;
+    console.log(createExpenseDto);
    
     const payment_methods = await this.paymentMethodService.findOne(createExpenseDto.paymentMethodId,userId);
+
+    console.log(payment_methods);
 
     payment_methods.current_balance = payment_methods.current_balance - createExpenseDto.amount;
 
