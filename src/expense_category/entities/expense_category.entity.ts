@@ -12,6 +12,8 @@ export class ExpenseCategory {
 
     @Column()
     serviceId: number;
+    @Column()
+    colorCode:string
 
     @ManyToOne(() => Service)
     @JoinColumn({name: 'serviceId'})
