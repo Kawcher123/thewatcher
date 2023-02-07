@@ -30,6 +30,11 @@ export class ExpensesService {
 
     payment_methods.current_balance = payment_methods.current_balance - createExpenseDto.amount;
 
+    if(payment_methods.current_balance<createExpenseDto.amount)
+    {
+      return {"error":true,"message":"You don't have enough money in "+payment_methods.name };
+    }
+
 
     const newPayment=await this.paymentMethodService.updateData(payment_methods.id, payment_methods);
 
