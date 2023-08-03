@@ -32,7 +32,7 @@ import { MyLoan } from './my_loans/entities/my_loan.entity';
       port: 3307,
       username: 'root',
       password: '',
-      database: 'thewatcher',
+      database: 'pramit',
       entities: [Role,Service,Permission,User,ExpenseCategory,Expense,BeneficiaryContact,PaymentMethod,MyContact,MyLoan],
       synchronize: true,
     }),

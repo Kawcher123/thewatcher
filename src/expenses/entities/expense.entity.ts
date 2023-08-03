@@ -41,8 +41,7 @@ export class Expense {
 
     @Column({type: 
         'timestamp', 
-        nullable: false,default: ()=> 
-        'NOW()' })
+        nullable: false })
         
     created_at: string; // Creation date
 
